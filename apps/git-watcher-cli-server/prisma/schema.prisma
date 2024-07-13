@@ -1,0 +1,47 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Graph {
+  id           String   @id @default(cuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  fileName     String?
+  dependencies Json?
+}
+
+model Configuration {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  minInterval Int?
+  maxInterval Int?
+  repoPath    String?
+  prefix      String?
+}
+
+model CommitHistory {
+  id            String    @id @default(cuid())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  commitMessage String?
+  committedAt   DateTime?
+}
+
+model CommitDetails {
+  id            String                       @id @default(cuid())
+  createdAt     DateTime                     @default(now())
+  updatedAt     DateTime                     @updatedAt
+  fileName      String?
+  changeType    EnumCommitDetailsChangeType?
+  changeSummary String?
+}
+
+enum EnumCommitDetailsChangeType {
+  Option1
+}
